@@ -9,7 +9,7 @@ pipeline{
       steps {
 	sh 'rm -rf *.war'
         sh 'jar -cvf SurveyForm.war .'     
-        sh 'docker build -t skm05/surveyform:latest .'
+        sh 'docker build -t skm05/surveyform:${BUILD_NUMBER} .'
       }
     }
     stage('Login') {
@@ -19,13 +19,13 @@ pipeline{
     }
     stage("Push image to docker hub"){
       steps {
-        sh 'docker push skm05/surveyform:latest'
+        sh 'docker push skm05/surveyform:${BUILD_NUMBER}'
       }
     }
         stage("deploying on k8")
 	{
 		steps{
-			sh 'kubectl set image deployment/homework2 container-0=skm05/surveyform:latest -n default'
+			sh 'kubectl set image deployment/homework2 container-0=skm05/surveyform:${BUILD_NUMBER} -n default'
 			sh 'kubectl rollout restart deploy homework2 -n default'
 		}
 	} 
