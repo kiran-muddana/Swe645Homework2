@@ -1,39 +1,54 @@
-
-pipeline{
+pipeline {
     agent any
+    
     environment {
-		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
-	}
-  stages{
-    stage('Build') {
-      steps {
-	sh 'rm -rf *.war'
-        sh 'jar -cvf SurveyForm.war .'     
-        sh 'sudo docker build -t skm05/surveyform:${BUILD_NUMBER} .'
-      }
+        // Load Docker Hub credentials from Jenkins credentials store
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+        // Define the image tag with build number
+        IMAGE_TAG = "skm05/surveyform:${BUILD_NUMBER}"
     }
-    stage('Login') {
-      steps {
-        sh 'echo $DOCKERHUB_CREDENTIALS_PSW |docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-       }
+
+    stages {
+        stage('Build') {
+            steps {
+                // Remove previous artifacts and build a new WAR file
+                sh 'rm -rf *.war'
+                sh 'jar -cvf SurveyForm.war .'     
+                // Build the Docker image with the defined image tag
+                sh "docker build -t ${IMAGE_TAG} ."
+            }
+        }
+
+        stage('Login to Docker Hub') {
+            steps {
+                // Use Docker Hub credentials to log in
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                    sh "echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USERNAME} --password-stdin"
+                }
+            }
+        }
+
+        stage("Push image to Docker Hub") {
+            steps {
+                // Push the built Docker image to Docker Hub
+                sh "docker push ${IMAGE_TAG}"
+            }
+        }
+
+        stage("Deploying on Kubernetes") {
+            steps {
+                // Set the image for the Kubernetes deployment
+                sh "kubectl set image deployment/homework2 container-0=${IMAGE_TAG} -n default"
+                // Restart the deployment to apply changes
+                sh "kubectl rollout restart deploy homework2 -n default"
+            }
+        }
     }
-    stage("Push image to docker hub"){
-      steps {
-        sh 'sudo docker push skm05/surveyform:${BUILD_NUMBER}'
-      }
+
+    post {
+        always {
+            // Logout from Docker Hub after the pipeline execution
+            sh 'docker logout'
+        }
     }
-        stage("deploying on k8")
-	{
-		steps{
-			sh 'kubectl set image deployment/homework2 container-0=skm05/surveyform:${BUILD_NUMBER} -n default'
-			sh 'kubectl rollout restart deploy homework2 -n default'
-		}
-	} 
-  }
- 
-  post {
-	  always {
-			sh 'sudo docker logout'
-		}
-	}    
 }
