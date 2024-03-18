@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title of the page -->
+    <title>Student Survey Form</title>
+    <!-- Internal CSS styles -->
+    <style>
+        /* Body styles */
+        body {
+            font-family: 'Arial';
+            background-color: white;
+            color: black;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Header styles */
+        h1 {
+            text-align: center;
+            color: black;
+        }
+
+        /* Form styles */
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        /* Label styles */
+        label {
+            margin-bottom: 8px;
+        }
+
+        /* Input styles */
+        input[type="text"],
+        input[type="tel"],
+        input[type="email"],
+        input[type="date"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            border: 1px solid gray;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        /* Checkbox and radio button styles */
+        input[type="checkbox"],
+        input[type="radio"] {
+            margin-right: 5px;
+            margin-bottom: 16px;
+        }
+
+        /* Paragraph styles */
+        p {
+            margin-bottom: 8px;
+        }
+
+        /* Button styles */
+        input[type="submit"],
+        input[type="button"] {
+            background-color: #007bff;
+            color: whitesmoke;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Button hover styles */
+        input[type="submit"]:hover,
+        input[type="button"]:hover {
+            background-color: #0056b3;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <h1>Student Survey Form</h1>
+
+    <!-- Form -->
+    <form>
+        <!-- First Name -->
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required>
+        <br>
+
+        <!-- Last Name -->
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required>
+        <br>
+
+        <!-- Street Address -->
+        <label for="streetAddress">Street Address:</label>
+        <input type="text" id="streetAddress" name="streetAddress" required>
+        <br>
+
+        <!-- City -->
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" required>
+        <br>
+
+        <!-- State -->
+        <label for="state">State:</label>
+        <input type="text" id="state" name="state" required>
+        <br>
+
+        <!-- ZIP -->
+        <label for="zip">ZIP:</label>
+        <input type="text" id="zip" name="zip" required>
+        <br>
+
+        <!-- Telephone Number -->
+        <label for="telephone">Telephone Number:</label>
+        <input type="tel" id="telephone" name="telephone" required>
+        <br>
+
+        <!-- Email -->
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+
+        <!-- Date of Survey -->
+        <label for="dateOfSurvey">Date of Survey:</label>
+        <input type="date" id="dateOfSurvey" name="dateOfSurvey" required>
+        <br>
+
+        <!-- Liked Most about the Campus -->
+        <p>What did you like most about the campus?</p>
+        <input type="checkbox" id="students" name="Students">
+        <label for="students">Students</label>
+
+        <input type="checkbox" id="location" name="Location">
+        <label for="location">Location</label>
+
+        <input type="checkbox" id="campus" name="Campus">
+        <label for="campus">Campus</label>
+
+        <input type="checkbox" id="atmosphere" name="Atmosphere">
+        <label for="atmosphere">Atmosphere</label>
+
+        <input type="checkbox" id="dormRooms" name="DormRooms">
+        <label for="dormRooms">Dorm Rooms</label>
+
+        <input type="checkbox" id="sports" name="Sports">
+        <label for="sports">Sports</label>
+
+        <!-- How did you become interested in the university? -->
+        <p>How did you become interested in the university?</p>
+        <input type="radio" id="friends" name="Source" value="friends" required>
+        <label for="friends">Friends</label>
+
+        <input type="radio" id="TV" name="Source" value="television" required>
+        <label for="TV">Television</label>
+
+        <input type="radio" id="internet" name="Source" value="internet" required>
+        <label for="internet">Internet</label>
+
+        <input type="radio" id="other" name="Source" value="other" required>
+        <label for="other">Other</label>
+        <br>
+
+        <!-- Likelihood of Recommending to other prospective students -->
+        <label for="likelihood">Likelihood of Recommending to other prospective students:</label>
+        <select id="likelihood" name="likelihood" required>
+            <option value="veryLikely">Very Likely</option>
+            <option value="likely">Likely</option>
+            <option value="unlikely">Unlikely</option>
+        </select>
+        <br>
+
+        <!-- Raffle -->
+        <label for="raffle">Raffle (Enter at least ten comma-separated numbers from 1 through 100):</label>
+        <input type="text" id="raffle" name="raffle" pattern="^(\s*\d{1,3}\s*,){9}\s*\d{1,3}\s*$" placeholder="Example: 1, 5, 6, 16, 30, 40, 50, 60, 70, 80" required>
+        <br>
+
+        <!-- Additional Comments -->
+        <label for="additionalComments">Additional Comments:</label>
+        <textarea id="additionalComments" name="additionalComments" rows="4"></textarea>
+        <br>
+
+        <!-- Submit and Cancel buttons -->
+        <input type="submit" value="Submit">
+        <input type="button" value="Cancel">
+    </form>
+
+</body>
+</html>
