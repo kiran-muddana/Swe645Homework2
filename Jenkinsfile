@@ -9,7 +9,7 @@ pipeline{
       steps {
 	sh 'rm -rf *.war'
         sh 'jar -cvf SurveyForm.war .'     
-        sh 'docker build -t skm05/surveyform:${BUILD_NUMBER} .'
+        sh 'sudo docker build -t skm05/surveyform:${BUILD_NUMBER} .'
       }
     }
     stage('Login') {
@@ -19,7 +19,7 @@ pipeline{
     }
     stage("Push image to docker hub"){
       steps {
-        sh 'docker push skm05/surveyform:${BUILD_NUMBER}'
+        sh 'sudo docker push skm05/surveyform:${BUILD_NUMBER}'
       }
     }
         stage("deploying on k8")
@@ -33,7 +33,7 @@ pipeline{
  
   post {
 	  always {
-			sh 'docker logout'
+			sh 'sudo docker logout'
 		}
 	}    
 }
