@@ -8,7 +8,7 @@ pipeline{
     stage('Build') {
       steps {
 	sh 'rm -rf *.var'
-        sh 'jar -cvf SurveyForm.war -C "Swe645Homework2/" .'     
+        sh 'jar -cvf SurveyForm.war .'     
         sh 'docker build -t skm05/surveyform:latest .'
       }
     }
